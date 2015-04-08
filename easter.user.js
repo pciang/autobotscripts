@@ -36,6 +36,15 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	var eggchargeCharm = 'egg_charge_trinket';
 	var eggstraCharm = 'eggstra_trinket';
 
+	// Initialization
+	function () {
+		if(chargeQty < 20) {
+			hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
+		} else if(chargeQty == 20) {
+			hg.utils.TrapControl.setTrinket(eggstraCharm).go();
+		}
+	}();
+
 	function listen() {
 		chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')));
 		
