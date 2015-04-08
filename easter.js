@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	// hg.utils.TrapControl.setTrinket(item.type).go();
 	// alert(hg);
 
+	var loadedCharm = '';
 	var eggchargeCharm = 'egg_charge_trinket';
 	var eggstraCharm = 'eggstra_trinket';
 
@@ -39,10 +40,10 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')));
 		
 		// Workaround for arming charms
-		if(chargeQty < 18) {
-			hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
-		} else if(chargeQty >= 18) {
-			hg.utils.TrapControl.setTrinket(eggstraCharm).go();
+		if(chargeQty < 18 && loadedCharm !== eggchargeCharm) {
+			hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+		} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
+			hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
 		}
 
 		setTimeout(listen, 10000);
