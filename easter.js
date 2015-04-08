@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		// Workaround for arming charms
 		if(chargeQty < 18) {
 			hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
-		} else if(chargeQty == 20) {
+		} else if(chargeQty >= 18) {
 			hg.utils.TrapControl.setTrinket(eggstraCharm).go();
 		}
 
