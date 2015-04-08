@@ -2,7 +2,7 @@
 // @name        MouseHunt EasterBot
 // @author      Peter
 // @version    	1.0
-// @description This script will alert user when charges reached medium (17/20).
+// @description This script will automatically switch between Eggstra charm and Eggscavator Charge charm.
 // @grant		none
 // @include		http://mousehuntgame.com/*
 // @include		https://mousehuntgame.com/*
