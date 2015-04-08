@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	var eggstraCharm = 'eggstra_trinket';
 
 	function listen() {
+		chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')));
+		
 		// Workaround for arming charms
 		if(chargeQty < 18) {
 			hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
