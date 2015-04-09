@@ -147,7 +147,10 @@ document.addEventListener('DOMContentLoaded', function (arg) {
                     || window.location.href == "https://www.mousehuntgame.com/#"
                     || window.location.href == "https://www.mousehuntgame.com/?switch_to=standard"
                     || window.location.href.indexOf("mousehuntgame.com/turn.php") != -1
-                    || window.location.href.indexOf("mousehuntgame.com/index.php") != -1) {
+                    || window.location.href.indexOf("mousehuntgame.com/index.php") != -1
+                    || window.location.href.indexOf("mousehuntgame.com/canvas/index.php") != -1
+                    || window.location.href.indexOf("mousehuntgame.com/canvas/turn.php") != -1
+                    || window.location.href.indexOf("mousehuntgame.com/canvas/?") != -1) {
                 // Workaround for arming charms
                 if (chargeQty < 19) {
                     // Use new charm
