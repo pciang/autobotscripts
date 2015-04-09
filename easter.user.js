@@ -90,13 +90,12 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		temp = document.createElement('button');
 		temp.appendChild(document.createTextNode('Save'));
 		temp.onclick = function (e) {
-			console.log(JSON.stringify(easterSettings));
 			localStorage.setItem(storageKey, JSON.stringify(easterSettings));
 		};
 		div.appendChild(temp);
 
 		temp = document.createElement('i');
-		temp.appendChild(document.createTextNode('(Remember to reload!)'));
+		temp.appendChild(document.createTextNode('(Reload to ensure that settings are saved!)'));
 		div.appendChild(temp);
 
 		Settings_Box.appendChild(div);
@@ -109,48 +108,44 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	// hg.utils.TrapControl.setTrinket(item.type).go();
 	// alert(hg);
 
-	var loadedCharm = '';
+	var loadedCharmId = 0;
 	hg.utils.TrapControl.disarmTrinket().go();
 
 	var eggchargeCharm = 'egg_charge_trinket';
-	var eggstraCharm = 'eggstra_trinket';
-	var newCharm = 'eggstra_charge_trinket';
+	var eggchargeCharmId = 1164;
 
-	// Initialization
-	(function () {
-		if(easterSettings.activate) {
-			// Workaround for arming charms
-			if(chargeQty < 18) {
-				if(easterSettings.useNewCharm && loadedCharm != newCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
-				} else if(!easterSettings.useNewCharm && loadedCharm != eggchargeCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
-				}
-			} else if(chargeQty == 20 && loadedCharm != eggstraCharm) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
-			}
-		}
-	})();
+	var eggstraCharm = 'eggstra_trinket';
+	var eggstraCharmId = 851;
+
+	var newCharm = 'eggstra_charge_trinket';
+	var newCharmId = 1714;
 
 	function listen() {
+		loadedCharmId = user.trinket_item_id;
 		chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')));
 		
 		// If bot is allowed to activate
 		if(easterSettings.activate) {
 			// Workaround for arming charms
 			if(chargeQty < 18) {
-				if(easterSettings.useNewCharm && loadedCharm != newCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
-				} else if(!easterSettings.useNewCharm && loadedCharm != eggchargeCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+				// Use new charm
+				if(easterSettings.useNewCharm && loadedCharmId != newCharmId) {
+					hg.utils.TrapControl.setTrinket(newCharm).go();
+				// Use Eggscavator Charge Charm
+				} else if(!easterSettings.useNewCharm && loadedCharmId != eggchargeCharmId) {
+					hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
 				}
-			} else if(chargeQty == 20 && loadedCharm != eggstraCharm) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+			// Use Eggstra charm
+			} else if(chargeQty == 20 && loadedCharmId != eggstraCharmId) {
+				hg.utils.TrapControl.setTrinket(eggstraCharm).go();
 			}
 		}
 
 		setTimeout(listen, 10000);
 	}
 
-	listen();
+	if(easterSettings.activate) {
+		alert('EasterBot script loaded!');
+		listen();
+	}
 });
