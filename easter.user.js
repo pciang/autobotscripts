@@ -110,23 +110,24 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	// alert(hg);
 
 	var loadedCharm = '';
+	hg.utils.TrapControl.disarmTrinket().go();
+
 	var eggchargeCharm = 'egg_charge_trinket';
 	var eggstraCharm = 'eggstra_trinket';
 	var newCharm = 'eggstra_charge_trinket';
 
 	// Initialization
 	(function () {
-		if(!easterSettings.useNewCharm) {
-			if(chargeQty < 20) {
+		if(easterSettings.activate) {
+			// Workaround for arming charms
+			if(chargeQty < 18) {
+				if(easterSettings.useNewCharm && loadedCharm != newCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
+				} else if(!easterSettings.useNewCharm && loadedCharm != eggchargeCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+				}
+			} else if(chargeQty == 20 && loadedCharm != eggstraCharm) {
 				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
-			} else if(chargeQty == 20) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
-			}
-		} else {
-			if(chargeQty < 20) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
-			} else if(chargeQty == 20) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
 			}
 		}
 	})();
@@ -137,25 +138,19 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		// If bot is allowed to activate
 		if(easterSettings.activate) {
 			// Workaround for arming charms
-			if(!easterSettings.useNewCharm) {
-				if(chargeQty < 18 && loadedCharm !== eggchargeCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
-				} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
-				}
-			} else {
-				// New charm: Eggstra Charge Charm
-				if(chargeQty < 18 && loadedCharm !== newCharm) {
+			if(chargeQty < 18) {
+				if(easterSettings.useNewCharm && loadedCharm != newCharm) {
 					hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
-				} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
-					hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+				} else if(!easterSettings.useNewCharm && loadedCharm != eggchargeCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
 				}
+			} else if(chargeQty == 20 && loadedCharm != eggstraCharm) {
+				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
 			}
 		}
 
 		setTimeout(listen, 10000);
 	}
 
-	alert('EasterBot script successfully loaded!');
 	listen();
 });
