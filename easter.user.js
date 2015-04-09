@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 	}
 
 	if(easterSettings.activate) {
-		alert('EasterBot script loaded!');
+		// alert('EasterBot script loaded!');
 		listen();
 	}
 });
