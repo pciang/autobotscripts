@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function (arg) {
     Settings_Box.setAttribute('style', 'border-top: 3px double #FC6;'
             + ' border-bottom: 3px double #FC6; padding: 5px 0 5px;');
 
+    var Notice_Log = document.createElement('div');
+    Notice_Log.setAttribute('style', 'color: #f90; font-size: 1.125em; display: none;');
+
     // Settings_Box content
     (function () {
         var div, temp;
@@ -90,6 +93,9 @@ document.addEventListener('DOMContentLoaded', function (arg) {
         div.appendChild(temp);
 
         Settings_Box.appendChild(div);
+
+        /* Line 4 */
+        Settings_Box.appendChild(Notice_Log);
     })();
 
     var Charge_Qty = document.getElementsByClassName("chargeQuantity")[0];
@@ -133,21 +139,34 @@ document.addEventListener('DOMContentLoaded', function (arg) {
             loadedCharmId = user.trinket_item_id;
             chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')), 10);
 
-            // Workaround for arming charms
-            if (chargeQty < 19) {
-                // Use new charm
-                if (easterSettings.useNewCharm && loadedCharmId !== newCharmId && newCharmQty > 0) {
-                    hg.utils.TrapControl.setTrinket(newCharm).go();
-                    console.log("Changed to Eggscavator Charge Charm!");
-                // Use Eggscavator Charge Charm
-                } else if ((newCharmQty === 0 || !easterSettings.useNewCharm) && loadedCharmId !== eggchargeCharmId && eggchargeCharmQty > 0) {
-                    hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
+            // If user is in camp
+            if (window.location.href == "http://www.mousehuntgame.com/"
+                    || window.location.href == "http://www.mousehuntgame.com/#"
+                    || window.location.href == "http://www.mousehuntgame.com/?switch_to=standard"
+                    || window.location.href == "https://www.mousehuntgame.com/"
+                    || window.location.href == "https://www.mousehuntgame.com/#"
+                    || window.location.href == "https://www.mousehuntgame.com/?switch_to=standard"
+                    || window.location.href.indexOf("mousehuntgame.com/turn.php") != -1
+                    || window.location.href.indexOf("mousehuntgame.com/index.php") != -1) {
+                // Workaround for arming charms
+                if (chargeQty < 19) {
+                    // Use new charm
+                    if (easterSettings.useNewCharm && loadedCharmId !== newCharmId && newCharmQty > 0) {
+                        hg.utils.TrapControl.setTrinket(newCharm).go();
+                        console.log("Changed to Eggscavator Charge Charm!");
+                    // Use Eggscavator Charge Charm
+                    } else if ((newCharmQty === 0 || !easterSettings.useNewCharm) && loadedCharmId !== eggchargeCharmId && eggchargeCharmQty > 0) {
+                        hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
+                        console.log("Changed to Eggstra Charge Charm!");
+                    }
+                // Use Eggstra charm
+                } else if (chargeQty >= 19 && loadedCharmId !== eggstraCharmId && eggstraCharmQty > 0) {
+                    hg.utils.TrapControl.setTrinket(eggstraCharm).go();
                     console.log("Changed to Eggstra Charge Charm!");
                 }
-            // Use Eggstra charm
-            } else if (chargeQty >= 19 && loadedCharmId !== eggstraCharmId && eggstraCharmQty > 0) {
-                hg.utils.TrapControl.setTrinket(eggstraCharm).go();
-                console.log("Changed to Eggstra Charge Charm!");
+            } else {
+                Notice_Log.style.display = 'block';
+                Notice_Log.textContent = 'EasterBot is automatically deactivated when Hunter is not in Camp.';
             }
             setTimeout(listen, 10000);
         }
