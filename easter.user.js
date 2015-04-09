@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		div.appendChild(temp);
 
 		temp = document.createElement('i');
-		temp.appendChild(document.createTextNode('(Reload to ensure that settings are saved!)'));
+		temp.appendChild(document.createTextNode('(Reload is unnecessary!)'));
 		div.appendChild(temp);
 
 		Settings_Box.appendChild(div);
