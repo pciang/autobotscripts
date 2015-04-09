@@ -31,9 +31,8 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 
 	App_Container.insertBefore(Settings_Box, App_Container.firstChild);
 
-	Settings_Box.setAttribute('style', 'border-left: 1px inset #830300;'
-			+ ' border-right: 1px inset #830300; border-top: 3px double #830300;'
-			+ ' border-bottom: 3px double #830300; padding: 5px 0 5px;');
+	Settings_Box.setAttribute('style', 'border-top: 3px double #FC6;'
+			+ ' border-bottom: 3px double #FC6; padding: 5px 0 5px;');
 
 	// Settings_Box content
 	(function () {
@@ -42,7 +41,11 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 
 		/* Line 1 */
 		div = document.createElement('div');
-		div.appendChild(document.createTextNode('MouseHunt EasterBot loaded!'));
+		
+		temp = document.createElement('b');
+		temp.appendChild(document.createTextNode('MouseHunt EasterBot'));
+		div.appendChild(temp);
+		
 		Settings_Box.appendChild(div);
 
 
@@ -58,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		temp.checked = easterSettings.activate;
 		temp.onchange = function (e) {
 			easterSettings.activate = this.checked;
+			localStorage.setItem(storageKey, JSON.stringify(easterSettings));
 		};
 		div.appendChild(temp);
 
@@ -75,27 +79,12 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		temp.checked = easterSettings.useNewCharm;
 		temp.onchange = function (e) {
 			easterSettings.useNewCharm = this.checked;
-		};
-		div.appendChild(temp);
-
-		temp = document.createElement('i');
-		temp.appendChild(document.createTextNode('(Enabling this will allow swapping between Eggstra Charge Charm & Eggstra Charm!)'));
-		div.appendChild(temp);
-
-		Settings_Box.appendChild(div);
-
-		/* Line 4 */
-		div = document.createElement('div');
-
-		temp = document.createElement('button');
-		temp.appendChild(document.createTextNode('Save'));
-		temp.onclick = function (e) {
 			localStorage.setItem(storageKey, JSON.stringify(easterSettings));
 		};
 		div.appendChild(temp);
 
 		temp = document.createElement('i');
-		temp.appendChild(document.createTextNode('(Reload is unnecessary!)'));
+		temp.appendChild(document.createTextNode('(Swap between Eggstra Charge Charm (x2 egg + charge) & Eggstra Charm (x2 egg)!)'));
 		div.appendChild(temp);
 
 		Settings_Box.appendChild(div);
