@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		div = document.createElement('div');
 
 		temp = document.createElement('b');
-		temp.appendChild(document.createTextNode('!!Not working yet!!: '));
+		temp.appendChild(document.createTextNode('Use Eggstra Charge Charm: '));
 		div.appendChild(temp);
 
 		temp = document.createElement('input');
@@ -95,6 +95,10 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		};
 		div.appendChild(temp);
 
+		temp = document.createElement('i');
+		temp.appendChild(document.createTextNode('(Remember to reload!)'));
+		div.appendChild(temp);
+
 		Settings_Box.appendChild(div);
 	})();
 
@@ -112,10 +116,18 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 
 	// Initialization
 	(function () {
-		if(chargeQty < 20) {
-			hg.utils.TrapControl.setTrinket(eggchargeCharm).go();
-		} else if(chargeQty == 20) {
-			hg.utils.TrapControl.setTrinket(eggstraCharm).go();
+		if(!easterSettings.useNewCharm) {
+			if(chargeQty < 20) {
+				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+			} else if(chargeQty == 20) {
+				hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+			}
+		} else {
+			if(chargeQty < 20) {
+				hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
+			} else if(chargeQty == 20) {
+				hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+			}
 		}
 	})();
 
@@ -125,10 +137,19 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 		// If bot is allowed to activate
 		if(easterSettings.activate) {
 			// Workaround for arming charms
-			if(chargeQty < 18 && loadedCharm !== eggchargeCharm) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
-			} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
-				hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+			if(!easterSettings.useNewCharm) {
+				if(chargeQty < 18 && loadedCharm !== eggchargeCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = eggchargeCharm).go();
+				} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+				}
+			} else {
+				// New charm: Eggstra Charge Charm
+				if(chargeQty < 18 && loadedCharm !== newCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = newCharm).go();
+				} else if(chargeQty == 20 && loadedCharm !== eggstraCharm) {
+					hg.utils.TrapControl.setTrinket(loadedCharm = eggstraCharm).go();
+				}
 			}
 		}
 
