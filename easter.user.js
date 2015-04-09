@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
             chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')), 10);
 
             // Workaround for arming charms
-            if (chargeQty < 18) {
+            if (chargeQty < 19) {
                 // Use new charm
                 if (easterSettings.useNewCharm && loadedCharmId !== newCharmId && newCharmQty > 0) {
                     hg.utils.TrapControl.setTrinket(newCharm).go();
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
                     console.log("Changed to Eggstra Charge Charm!");
                 }
             // Use Eggstra charm
-            } else if (chargeQty >= 18 && loadedCharmId !== eggstraCharmId && eggstraCharmQty > 0) {
+            } else if (chargeQty >= 19 && loadedCharmId !== eggstraCharmId && eggstraCharmQty > 0) {
                 hg.utils.TrapControl.setTrinket(eggstraCharm).go();
                 console.log("Changed to Eggstra Charge Charm!");
             }
