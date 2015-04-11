@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        MouseHunt EasterBot
-// @author      Peter
+// @author      Peter, Kenrick
 // @version     1.0
 // @description This script will automatically switch between Eggstra charm and Eggscavator Charge charm.
 // @grant       none
