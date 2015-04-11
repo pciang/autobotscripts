@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
         div = document.createElement('div');
 
         temp = document.createElement('b');
-        temp.appendChild(document.createTextNode('Use Eggstra Charge Charm: '));
+        temp.appendChild(document.createTextNode('Prefer Eggstra Charge Charm: '));
         div.appendChild(temp);
 
         temp = document.createElement('input');
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
         div.appendChild(temp);
 
         temp = document.createElement('i');
-        temp.appendChild(document.createTextNode('(Swap between Eggstra Charge Charm (x2 egg + charge) & Eggstra Charm (x2 egg)!)'));
+        temp.appendChild(document.createTextNode('(Swap between Eggstra Charge Charm (x2 egg + charge; if not available, fallback to Eggscavator Charge Charm (+charge)) & Eggstra Charm (x2 egg))'));
         div.appendChild(temp);
 
         Settings_Box.appendChild(div);
