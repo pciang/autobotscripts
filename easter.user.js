@@ -39,13 +39,15 @@ document.addEventListener('DOMContentLoaded', function (arg) {
 
     // Settings_Box content
     (function () {
-        var div, temp;
+        var div, temp, helpText;
 
         /* Line 1 */
         div = document.createElement('div');
-
-        temp = document.createElement('b');
-        temp.appendChild(document.createTextNode('MouseHunt EasterBot'));
+        temp = document.createElement('a');
+        temp.href = "https://github.com/pciang/AutobotScript";
+        temp.textContent = "MouseHunt EasterBot";
+        temp.target = "_blank";
+        temp.setAttribute("style", "font-weight: bold");
         div.appendChild(temp);
 
         Settings_Box.appendChild(div);
@@ -76,20 +78,20 @@ document.addEventListener('DOMContentLoaded', function (arg) {
         div = document.createElement('div');
 
         temp = document.createElement('b');
+        helpText = 'Swap between Eggstra Charge Charm (x2 egg + charge) & Eggstra Charm (x2 egg). If Eggstra Charge Charm is not available, fallback to Eggscavator Charge Charm (+ charge only)';
         temp.appendChild(document.createTextNode('Prefer Eggstra Charge Charm: '));
+        temp.title = helpText;
+        temp.setAttribute("style", "cursor: help; border-bottom: 1px dotted black");
         div.appendChild(temp);
 
         temp = document.createElement('input');
         temp.setAttribute('type', 'checkbox');
+        temp.title = helpText;
         temp.checked = easterSettings.useNewCharm;
         temp.onchange = function (e) {
             easterSettings.useNewCharm = this.checked;
             localStorage.setItem(storageKey, JSON.stringify(easterSettings));
         };
-        div.appendChild(temp);
-
-        temp = document.createElement('i');
-        temp.appendChild(document.createTextNode('(Swap between Eggstra Charge Charm (x2 egg + charge; if not available, fallback to Eggscavator Charge Charm (+charge)) & Eggstra Charm (x2 egg))'));
         div.appendChild(temp);
 
         Settings_Box.appendChild(div);
