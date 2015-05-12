@@ -75,18 +75,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	var grublingCharm = 'grubling_chow_trinket';
 	var grublingId = 1016;
 
-    hg.utils.UserInventory.getItem(grublingCharm,
-        function (e) {
-        	grublingQty = e.quantity;
-        },
-        function () {}
-    );
 
 	function listen() {
-		var
-			_ = document.getElementById('hudLocationContent').querySelector('.hasStampede');
-
 		if(settings.activate) {
+			var
+				_ = document.getElementById('hudLocationContent').querySelector('.hasStampede');
+
+		    hg.utils.UserInventory.getItem(grublingCharm,
+		        function (e) {
+		        	grublingQty = e.quantity;
+		        },
+		        function () {}
+		    );
+
 			// If stampede and have enough charm
 			if(_ && grublingQty > 0) {
 				if(user.trinket_item_id != grublingId) {
@@ -102,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
 					// Do nothing
 				}
 			}
+			
+			setTimeout(listen, 30000);
 		}
-
-		setTimeout(listen, 10000);
 	}
 
 	setTimeout(listen, 2000);
