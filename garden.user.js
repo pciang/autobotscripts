@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			var
 				_ = document.getElementById('hudLocationContent').querySelector('.curse.active');
 
-			if(_) {
+			if(_ && _.scrollHeight > 0) {
 			    hg.utils.UserInventory.getItem(searcherCharm,
 			        function (e) {
 			        	searcherQty = e.quantity;
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 				}
 			// If not cursed
-			} else if(!_) {
+			} else if(!_ || _.scrollHeight == 0) {
 				if(user.trinket_item_id == searcherId) {
 					hg.utils.TrapControl.disarmTrinket().go();
 				} else {
