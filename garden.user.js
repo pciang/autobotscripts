@@ -167,4 +167,4 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	setTimeout(listen, 2000);
-})
+});
