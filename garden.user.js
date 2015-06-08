@@ -15,18 +15,22 @@
 document.addEventListener('DOMContentLoaded', function () {
 	var
 		settings,
-		settingsKey = 'lg_bot';
+		settingsKey = 'lg_bot',
+		loopDelayMs = 30000;
 
 	if(localStorage.getItem(settingsKey)) {
 		settings = JSON.parse(localStorage.getItem(settingsKey));
 	} else {
 		settings = {
 			sand_dunes: true,
-			lost_city: true
+			lost_city: true,
+			cursed_city: true
 		};
 	}
 
     var App_Container = document.getElementById('hgAppContainer');
+
+    var hudDom = document.getElementById('hudLocationContent');
 
     var Settings_Box = document.createElement('div');
 
@@ -93,6 +97,28 @@ document.addEventListener('DOMContentLoaded', function () {
         div.appendChild(temp);
 
         Settings_Box.appendChild(div);
+
+        /* Line 4 */
+        div = document.createElement('div');
+
+        temp = document.createElement('b');
+        temp.appendChild(document.createTextNode('Cursed City: '));
+        div.appendChild(temp);
+
+        temp = document.createElement('input');
+        temp.setAttribute('type', 'checkbox');
+        temp.checked = settings.cursed_city;
+        temp.onchange = function (e) {
+            settings.cursed_city = this.checked;
+            localStorage.setItem(settingsKey, JSON.stringify(settings));
+        };
+        div.appendChild(temp);
+
+        temp = document.createElement('i');
+        temp.appendChild(document.createTextNode('(auto remove all curses, provided that user has enough charm)'));
+        div.appendChild(temp);
+
+        Settings_Box.appendChild(div);
 	}());
 
 	var grublingQty = 0;
@@ -103,11 +129,31 @@ document.addEventListener('DOMContentLoaded', function () {
 	var searcherCharm = 'searcher_trinket';
 	var searcherId = 1018;
 
+	var CURSE_MINIGAME = {
+		fear: {
+			charm: 'bravery_trinket',
+			charmId: 1011,
+			charmQty: 0,
+			domSelector: '.curse.fear.active'
+		},
+		darkness: {
+			charm: 'shiny_trinket',
+			charmId: 1019,
+			charmQty: 0,
+			domSelector: '.curse.darkness.active'
+		},
+		mist: {
+			charm: 'clarity_trinket',
+			charmId: 1012,
+			charmQty: 0,
+			domSelector: '.curse.mist.active'
+		}
+	};
 
 	function listen() {
 		if(settings.sand_duens) {
 			var
-				_ = document.getElementById('hudLocationContent').querySelector('.hasStampede');
+				_ = hudDom.querySelector('.hasStampede');
 
 			if(_) {
 			    hg.utils.UserInventory.getItem(grublingCharm,
@@ -136,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if(settings.lost_city) {
 			var
-				_ = document.getElementById('hudLocationContent').querySelector('.curse.active');
+				_ = hudDom.querySelector('.curse.active');
 
 			if(_ && _.scrollHeight > 0) {
 			    hg.utils.UserInventory.getItem(searcherCharm,
@@ -163,7 +209,54 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			}
 		}
-		setTimeout(listen, 30000);
+		if(settings.cursed_city) {
+			// AFAIK, these get quantity functions do not send any request to server
+
+		    hg.utils.UserInventory.getItem(CURSE_MINIGAME.fear.charmId,
+		        function (e) {
+		        	CURSE_MINIGAME.fear.charmQty = e.quantity;
+		        },
+		        function () {}
+		    );
+
+		    hg.utils.UserInventory.getItem(CURSE_MINIGAME.darkness.charmId,
+		        function (e) {
+		        	CURSE_MINIGAME.darkness.charmQty = e.quantity;
+		        },
+		        function () {}
+		    );
+
+		    hg.utils.UserInventory.getItem(CURSE_MINIGAME.mist.charmId,
+		        function (e) {
+		        	CURSE_MINIGAME.mist.charmQty = e.quantity;
+		        },
+		        function () {}
+		    );
+
+			// If hunter is feared by the curse
+			if(document.querySelector(CURSE_MINIGAME.fear.domSelector) != null && CURSE_MINIGAME.fear.charmQty > 0) {
+				if(user.trinket_item_id != CURSE_MINIGAME.fear.charmId) {
+					hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.fear.charm).go();
+				} else {
+					// Charm armed, do nothing
+				}
+			// If hunter finds oneself in the darkness
+			} else if(document.querySelector(CURSE_MINIGAME.darkness.domSelector) != null && CURSE_MINIGAME.darkness.charmQty > 0) {
+				if(user.trinket_item_id != CURSE_MINIGAME.darkness.charmId) {
+					hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.darkness.charm).go();
+				} else {
+					// Charm armed, do nothing
+				}
+			// If hunter is shrouded by mist
+			} else if(document.querySelector(CURSE_MINIGAME.mist.domSelector) != null && CURSE_MINIGAME.mist.charmQty > 0) {
+				if(user.trinket_item_id != CURSE_MINIGAME.mist.charmId) {
+					hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.mist.charm).go();
+				} else {
+					// Charm armed, do nothing
+				}
+			}
+		}
+		setTimeout(listen, loopDelayMs);
 	}
 
 	setTimeout(listen, 2000);
