@@ -239,21 +239,30 @@ document.addEventListener('DOMContentLoaded', function () {
 		    // If cursed
 			if(hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector) == null) {
 				// If hunter is feared by the curse
-				if(hudDom.querySelector(CURSE_MINIGAME.fear.domSelector) != null && CURSE_MINIGAME.fear.charmQty > 0) {
+				if(hudDom.querySelector(CURSE_MINIGAME.fear.domSelector) != null
+					&& hudDom.querySelector(CURSE_MINIGAME.fear.domSelector).scrollHeight > 0
+					&& CURSE_MINIGAME.fear.charmQty > 0) {
+
 					if(user.trinket_item_id != CURSE_MINIGAME.fear.charmId) {
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.fear.charm).go();
 					} else {
 						// Charm armed, do nothing
 					}
 				// If hunter finds oneself in the darkness
-				} else if(hudDom.querySelector(CURSE_MINIGAME.darkness.domSelector) != null && CURSE_MINIGAME.darkness.charmQty > 0) {
+				} else if(hudDom.querySelector(CURSE_MINIGAME.darkness.domSelector) != null
+					&& hudDom.querySelector(CURSE_MINIGAME.darkness.domSelector).scrollHeight > 0
+					&& CURSE_MINIGAME.darkness.charmQty > 0) {
+
 					if(user.trinket_item_id != CURSE_MINIGAME.darkness.charmId) {
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.darkness.charm).go();
 					} else {
 						// Charm armed, do nothing
 					}
 				// If hunter is shrouded by mist
-				} else if(hudDom.querySelector(CURSE_MINIGAME.mist.domSelector) != null && CURSE_MINIGAME.mist.charmQty > 0) {
+				} else if(hudDom.querySelector(CURSE_MINIGAME.mist.domSelector) != null
+					&& hudDom.querySelector(CURSE_MINIGAME.mist.domSelector).scrollHeight > 0
+					&& CURSE_MINIGAME.mist.charmQty > 0) {
+
 					if(user.trinket_item_id != CURSE_MINIGAME.mist.charmId) {
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.mist.charm).go();
 					} else {
