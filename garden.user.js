@@ -237,7 +237,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		    );
 
 		    // If cursed
-			if(hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector) == null) {
+			if(hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector) == null
+				&& hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector).scrollHeight > 0) {
 				// If hunter is feared by the curse
 				if(hudDom.querySelector(CURSE_MINIGAME.fear.domSelector) != null
 					&& hudDom.querySelector(CURSE_MINIGAME.fear.domSelector).scrollHeight > 0
