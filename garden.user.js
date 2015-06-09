@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var
 		settings,
 		settingsKey = 'lg_bot',
-		loopDelayMs = 30000;
+		loopDelayMs = 15000;
 
 	if(localStorage.getItem(settingsKey)) {
 		settings = JSON.parse(localStorage.getItem(settingsKey));
@@ -254,6 +254,10 @@ document.addEventListener('DOMContentLoaded', function () {
 				} else {
 					// Charm armed, do nothing
 				}
+			} else if(user.trinket_item_id == CURSE_MINIGAME.fear.charmId
+				|| user.trinket_item_id == CURSE_MINIGAME.darkness.charmId
+				|| user.trinket_item_id == CURSE_MINIGAME.mist.charmId) {
+				hg.utils.disarmTrinket().go();
 			}
 		}
 		setTimeout(listen, loopDelayMs);
