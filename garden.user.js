@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			domSelector: '.curse.fear.active'
 		},
 		darkness: {
-			charm: 'shiny_trinket',
+			charm: 'shine_trinket',
 			charmId: 1019,
 			charmQty: 0,
 			domSelector: '.curse.darkness.active'
@@ -214,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if(settings.cursed_city) {
 			// AFAIK, these get quantity functions do not send any request to server
-
 		    hg.utils.UserInventory.getItem(CURSE_MINIGAME.fear.charmId,
 		        function (e) {
 		        	CURSE_MINIGAME.fear.charmQty = e.quantity;
@@ -238,15 +237,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		    // If cursed
 			if(hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector) == null
-				&& hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector).scrollHeight > 0) {
+				|| hudDom.querySelector(CURSE_MINIGAME.blessed.domSelector).scrollHeight == 0) {
 				// If hunter is feared by the curse
 				if(hudDom.querySelector(CURSE_MINIGAME.fear.domSelector) != null
 					&& hudDom.querySelector(CURSE_MINIGAME.fear.domSelector).scrollHeight > 0
 					&& CURSE_MINIGAME.fear.charmQty > 0) {
 
 					if(user.trinket_item_id != CURSE_MINIGAME.fear.charmId) {
+						console.log('Fear curse detected! Bravery Charm armed!');
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.fear.charm).go();
 					} else {
+						console.log('Fear curse detected! Bravery Charm is already armed!');
 						// Charm armed, do nothing
 					}
 				// If hunter finds oneself in the darkness
@@ -255,8 +256,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					&& CURSE_MINIGAME.darkness.charmQty > 0) {
 
 					if(user.trinket_item_id != CURSE_MINIGAME.darkness.charmId) {
+						console.log('Darkness curse detected! Shine Charm armed!');
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.darkness.charm).go();
 					} else {
+						console.log('Darkness curse detected! Shine Charm is already armed!');
 						// Charm armed, do nothing
 					}
 				// If hunter is shrouded by mist
@@ -265,8 +268,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					&& CURSE_MINIGAME.mist.charmQty > 0) {
 
 					if(user.trinket_item_id != CURSE_MINIGAME.mist.charmId) {
+						console.log('Mist curse detected! Clarity Charm armed!');
 						hg.utils.TrapControl.setTrinket(CURSE_MINIGAME.mist.charm).go();
 					} else {
+						console.log('Mist curse detected! Clarity Charm is already armed!');
 						// Charm armed, do nothing
 					}
 				}
