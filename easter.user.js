@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function (arg) {
         Settings_Box.appendChild(Notice_Log);
     })();
 
-    var Charge_Qty = document.getElementsByClassName("chargeQuantity")[0];
+    var Charge_Qty = document.getElementsByClassName("springHuntHUD-charge-quantity")[0];
 
     var chargeQty = parseInt(Charge_Qty.textContent.substring(0, Charge_Qty.textContent.indexOf('/')));
 
